@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MyFriends</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <array name="tabs">
+        <item>Danh Bạ</item>
+        <item>Yêu Thích</item>
+        <item>Thêm</item>
+    </array>
+    <string name="title_activity_add_friends">AddFriendsActivity</string>
+    <string name="title_activity_information">InformationActivity</string>
+</resources>
