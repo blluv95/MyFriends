@@ -8,6 +8,24 @@ public class MyContact {
     String SDT;
     byte []IMAGE;
     int ID;
+    String CATEGORY;
+    int ID_CHECKBOX;
+
+    public int getID_CHECKBOX() {
+        return ID_CHECKBOX;
+    }
+
+    public void setID_CHECKBOX(int ID_CHECKBOX) {
+        this.ID_CHECKBOX = ID_CHECKBOX;
+    }
+
+    public String getCATEGORY() {
+        return CATEGORY;
+    }
+
+    public void setCATEGORY(String CATEGORY) {
+        this.CATEGORY = CATEGORY;
+    }
 
     public void setID(int ID) {
         this.ID = ID;

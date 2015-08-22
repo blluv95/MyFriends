@@ -8,36 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
-        android:gravity="center"
         android:orientation="horizontal">
 
-
-        <ImageView
+        <Button
+            android:id="@+id/btn_favorite_exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_search_white_18dp" />
+            android:background="@color/blue"
+            android:text="Thoát" />
 
-
-        <EditText
-        android:id="@+id/edittext_result_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:hint="Tìm Kiếm Bạn Bè"/>
-
-
-
-        <ImageView
-            android:id="@+id/image_add_contact"
+        <Button
+            android:id="@+id/btn_favorite_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_add_white_36dp" />
+            android:background="@color/blue"
+            android:text="Lưu" />
+
     </LinearLayout>
-
     <ListView
-        android:id="@+id/listview_contact"
+        android:id="@+id/listview_show_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 </LinearLayout>

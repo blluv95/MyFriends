@@ -6,8 +6,11 @@
     <array name="tabs">
         <item>Danh Bạ</item>
         <item>Yêu Thích</item>
-        <item>Thêm</item>
     </array>
     <string name="title_activity_add_friends">AddFriendsActivity</string>
     <string name="title_activity_information">InformationActivity</string>
+    <string name="title_activity_edit_information">EditInformationActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

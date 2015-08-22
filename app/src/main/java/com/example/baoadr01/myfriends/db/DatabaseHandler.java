@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.baoadr01.myfriends.Utils.MyContact;
@@ -21,6 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 	public static String KEY_URI_IMAGE = "image";
 	public static String KEY_SDT = "sdt";
 	public static String KEY_NAME = "name";
+	public static String KEY_CATEGORY="category";
 
 	Context context;
 	
@@ -36,6 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 		values.put(KEY_NAME, v.getNAME());
 		values.put(KEY_SDT, v.getSDT());
 		values.put(KEY_URI_IMAGE,v.getIMAGE());
+		values.put(KEY_CATEGORY, v.getCATEGORY());
 		
 		if(db.insert(TABLE_NAME, null, values)!= -1){
 			Toast.makeText(context, "Thêm thành công!", Toast.LENGTH_SHORT).show();
@@ -58,21 +61,48 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 			v.setNAME(cursor.getString(1));
 			v.setSDT(cursor.getString(2));
 			v.setIMAGE(cursor.getBlob(3));
+			v.setCATEGORY(cursor.getString(4));
 			list.add(v);
 			cursor.moveToNext();
 		}
 		return list;
 	}
+
+
+	public MyContact getDataTheoPos(int pos) {
+		SQLiteDatabase sDatabase = getReadableDatabase();
+		ArrayList<MyContact> lst = new ArrayList<MyContact>();
+		String command = "select * from " + TABLE_NAME;
+		Cursor cursor = sDatabase.rawQuery(command, null);
+		cursor.moveToFirst(); // cursor như 1 biến con trỏ . CHo trỏ lên thằng
+		// đầu tiên ds.
+		// nếu không phải thằng cuối cùng của ds thì sẽ lấy ds ra
+		while (!cursor.isAfterLast()) {
+			MyContact v = new MyContact();
+			v.setID(cursor.getInt(0));
+			v.setNAME(cursor.getString(1));
+			v.setSDT(cursor.getString(2));
+			v.setIMAGE(cursor.getBlob(3));
+			v.setCATEGORY(cursor.getString(4));
+			lst.add(v);
+			// sau Khi lấy ra con trỏ cursor sẽ trỏ đến thằng tiếp theo để lấy
+			// dữ liệu
+			cursor.moveToNext();
+		}
+		return lst.get(pos);
+	}
+
 	
-//	public void updateData(MyContact v){
-//		SQLiteDatabase db = this.getWritableDatabase();
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_WORD, v.getVOCABULARY());
-//		values.put(KEY_DEFINITION,v.getDEFINITION());
-//		db.update(TABLE_NAME, values, KEY_ID + " =? ", new String[]{String.valueOf(v.getID())});
-//		db.close();
-//	}
-//
+	public void updateData(MyContact v){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_NAME, v.getNAME());
+		values.put(KEY_SDT,v.getSDT());
+		db.update(TABLE_NAME, values, KEY_ID + " =? ", new String[]{String.valueOf(v.getID())});
+		Log.i("updateData-->","this");
+		db.close();
+	}
+
 	public void deleteData(int id){
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_NAME, KEY_ID +" =?", new String[]{String.valueOf(id)});
@@ -82,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String taoBangLienHe = "create table " + TABLE_NAME + " ( " + KEY_ID +" Integer primary key, " + KEY_NAME + " text, "
-				+ KEY_SDT + " text, "+KEY_URI_IMAGE +" BLOB"+ ")";
+				+ KEY_SDT + " text, "+KEY_URI_IMAGE +" BLOB, "+KEY_CATEGORY+ " text"+")";
 		db.execSQL(taoBangLienHe);
 	}
 
@@ -96,3 +126,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 
 }
+
+
+

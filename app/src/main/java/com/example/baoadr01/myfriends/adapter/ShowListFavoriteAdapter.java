@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,34 +14,27 @@ import com.example.baoadr01.myfriends.R;
 import com.example.baoadr01.myfriends.Utils.MyContact;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by BaoADR01 on 8/19/2015.
+ * Created by BaoADR01 on 8/22/2015.
  */
-public class MyContactAdapter extends BaseAdapter implements Filterable {
-    List<MyContact> lst;
-    List<MyContact> filterData;
+public class ShowListFavoriteAdapter extends BaseAdapter {
+    List<MyContact> list;
     Context context;
-    public static int vt;
-
-    public MyContactAdapter(Context context, List<MyContact> lst) {
-        this.context = context;
-        this.lst = lst;
-        filterData=new ArrayList<MyContact>();
-        filterData.addAll(lst);
+    public ShowListFavoriteAdapter(Context context,List<MyContact> list){
+        this.context=context;
+        this.list=list;
     }
-
 
     @Override
     public int getCount() {
-        return filterData.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return filterData.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -51,10 +42,8 @@ public class MyContactAdapter extends BaseAdapter implements Filterable {
         return position;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.item_mycontact, parent, false);
@@ -66,34 +55,6 @@ public class MyContactAdapter extends BaseAdapter implements Filterable {
         Bitmap theImage = BitmapFactory.decodeStream(imageStream);
         imageButton.setImageBitmap(theImage);
         textView.setText(myContact.getNAME());
-
         return rowView;
     }
-
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<MyContact> resultData = new ArrayList<MyContact>();
-            for (int i = 0; i < lst.size(); i++) {
-                if (lst.get(i).getNAME().toString().contains(constraint)) {
-                    resultData.add(lst.get(i));
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = resultData;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filterData = (List<MyContact>) results.values;
-            notifyDataSetChanged();
-
-        }
-    };
 }
