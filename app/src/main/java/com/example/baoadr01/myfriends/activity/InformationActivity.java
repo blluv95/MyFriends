@@ -1,5 +1,7 @@
 package com.example.baoadr01.myfriends.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,13 +48,13 @@ public class InformationActivity extends ActionBarActivity implements View.OnCli
         getData();
     }
 
-    public void setToolsBar(){
+    public void setToolsBar() {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
 
-    public void init(){
+    public void init() {
         imageView_information_avatar = (ImageView) findViewById(R.id.image_information_avatar);
         textView_information_name = (TextView) findViewById(R.id.textview_name_from_infomation);
         TextView_information_sdt = (TextView) findViewById(R.id.textview_information_sdt);
@@ -87,12 +89,37 @@ public class InformationActivity extends ActionBarActivity implements View.OnCli
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
-            DatabaseFavorite databaseFavorite = new DatabaseFavorite(getApplicationContext());
-            databaseHandler.deleteData(id_);
-            databaseFavorite.deleteData(id_);
-            Toast.makeText(getApplication(), "Đã Xóa Xong ", Toast.LENGTH_SHORT).show();
-            System.exit(0);
+            final DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
+            final DatabaseFavorite databaseFavorite = new DatabaseFavorite(getApplicationContext());
+
+            AlertDialog.Builder b = new AlertDialog.Builder(
+                    getApplicationContext());
+            b.setTitle("Question");
+            b.setMessage("Do you want delete ?");
+            b.setPositiveButton("Delete",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                            databaseHandler.deleteData(id_);
+                            databaseFavorite.deleteData(id_);
+                            System.exit(0);
+                        }
+                    });
+
+            b.setNegativeButton("Cannel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                            System.exit(0);
+                        }
+                    });
+
+            b.create().show();
+
+//            databaseHandler.deleteData(id_);
+//            databaseFavorite.deleteData(id_);
+            Toast.makeText(getApplicationContext(), "Đã Xóa Xong ", Toast.LENGTH_LONG).show();
             return true;
         }
         if (id == R.id.action_repair) {
@@ -129,4 +156,143 @@ public class InformationActivity extends ActionBarActivity implements View.OnCli
         }
     }
 }
+
+
+////--------------------
+//package com.example.callandsend;
+//
+//        import java.util.ArrayList;
+//
+//        import Adapter.MyAdapter;
+//        import DATA.MyContact;
+//        import android.app.Activity;
+//        import android.app.AlertDialog;
+//        import android.app.ListActivity;
+//        import android.content.DialogInterface;
+//        import android.content.Intent;
+//        import android.net.Uri;
+//        import android.os.Bundle;
+//        import android.view.Menu;
+//        import android.view.MenuItem;
+//        import android.view.View;
+//        import android.view.View.OnClickListener;
+//        import android.widget.AdapterView;
+//        import android.widget.AdapterView.OnItemClickListener;
+//        import android.widget.AdapterView.OnItemLongClickListener;
+//        import android.widget.Button;
+//        import android.widget.EditText;
+//        import android.widget.ListView;
+//        import android.widget.Toast;
+//
+//public class MainActivity extends Activity {
+//
+//    Button btSave;
+//    EditText edSdt, edName;
+//    ArrayList<MyContact> lst;
+//    ListView listView;
+//    MyAdapter adapter;
+//    MyContact contact;
+//    public static String name = "";
+//    public static String phoneNumber = "";
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        btSave = (Button) this.findViewById(R.id.btSave);
+//        edSdt = (EditText) findViewById(R.id.edSdt);
+//        edName = (EditText) findViewById(R.id.edName);
+//        lst = new ArrayList<MyContact>();
+//        listView = (ListView) findViewById(R.id.lst);
+//
+//        adapter = new MyAdapter(this, R.layout.view_row, lst);
+//        listView.setAdapter(adapter);
+//        btSave.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                // TODO Auto-generated method stub
+//                contact = new MyContact();
+//                String name = edName.getText().toString();
+//                String sdt = edSdt.getText().toString();
+//                contact.setName(name);
+//                contact.setSdt(sdt);
+//                lst.add(contact);
+//                adapter.notifyDataSetChanged();
+//                edName.setText("");
+//                edSdt.setText("");
+//            }
+//        });
+//        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+//            //Lưu vết
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+//                                           int arg2, long arg3) {
+//                // TODO Auto-generated method stub
+//                contact = lst.get(arg2);
+//                return false;
+//            }
+//        });
+//
+//        listView.setOnItemClickListener(new OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> lst1, View v, int position,
+//                                    long arg3) {
+//                // TODO Auto-generated method stub
+//
+//                MyContact mct = lst.get(position);
+//                name = mct.getName();
+//                phoneNumber = mct.getSdt();
+//
+//                AlertDialog.Builder b = new AlertDialog.Builder(
+//                        MainActivity.this);
+//                b.setTitle("Question");
+//                b.setMessage("Call And Message");
+//                b.setIcon(R.drawable.ic_launcher);
+//                b.setPositiveButton("Call",
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog,
+//                                                int which) {
+//                                // TODO Auto-generated method stub
+//                                Uri uri = Uri.parse("tel:" + phoneNumber);
+//                                Intent i = new Intent(Intent.ACTION_DIAL, uri);
+//                                startActivity(i);
+//
+//                            }
+//                        });
+//
+//                b.setNegativeButton("Message",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog,
+//                                                int which) {
+//                                // TODO Auto-generatthied method stub
+//                                Intent sendIntent = new Intent(Intent.ACTION_SENDTO,Uri.parse("sms:"+phoneNumber));
+//                                sendIntent.putExtra(Intent.EXTRA_TEXT,
+//                                        "This is my text to send. !");
+////								sendIntent.putExtra(
+////										Intent.ACTION_SEND_MULTIPLE,
+////										phoneNumber);
+//                                // sendIntent.putExtra("sdt", phoneNumber);
+////								sendIntent.setType("text/plain");
+//                                startActivity(Intent.createChooser(sendIntent,
+//                                        "123"));
+//                            }
+//                        });
+//
+//                b.create().show();
+//            }
+//        });
+//
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//}
 

@@ -56,8 +56,6 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
 
 
     public void searchContact() {
-
-
         edit_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
