@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
             tabHost.addTab(tabHost.newTab()
                     .setText(adapter.getPageTitle(i))
                     .setTabListener(this));
+
         }
 
     }

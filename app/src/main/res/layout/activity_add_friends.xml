@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:background="@color/blue2"
         android:orientation="horizontal">
 
         <Button
@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/blue"
+            android:background="@color/blue3"
             android:text="Thoát" />
 
         <Button
@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/blue"
+            android:background="@color/blue3"
             android:text="Lưu" />
 
     </LinearLayout>
@@ -42,32 +42,35 @@
             android:src="@drawable/avatar" />
 
         <!--<EditText-->
-            <!--android:id="@+id/editext_name"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:hint="Tên"-->
-            <!--android:textColor="@android:color/white" />-->
+        <!--android:id="@+id/editext_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:hint="Tên"-->
+        <!--android:textColor="@android:color/white" />-->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/editext_name"
                 android:layout_width="match_parent"
                 android:hint="Tên"
-                android:textColor="@android:color/white"
                 android:layout_height="wrap_content" />
+            <!--android:textColor="@android:color/white"-->
+
 
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
     <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:layout_below="@+id/layout_username"-->
-        <!--android:background="@android:color/white" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_below="@+id/layout_username"-->
+    <!--android:background="@android:color/white" />-->
 
     <LinearLayout
         android:layout_marginTop="20dp"
@@ -80,7 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:padding="10sp"
-            android:textColor="@color/white"
             android:text="Điện Thoại" />
 
 
@@ -99,13 +101,13 @@
             android:layout_weight="1"></Spinner>
 
         <!--<EditText-->
-            <!--android:id="@+id/edittext_sdt"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_weight="2"-->
-            <!--android:hint="Số Điện Thoại"-->
-            <!--android:textColor="@android:color/white" />-->
+        <!--android:id="@+id/edittext_sdt"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_weight="2"-->
+        <!--android:hint="Số Điện Thoại"-->
+        <!--android:textColor="@android:color/white" />-->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -115,9 +117,7 @@
                 android:id="@+id/edittext_sdt"
                 android:layout_width="match_parent"
                 android:hint="Số Điện Thoại"
-                android:textColor="@android:color/white"
                 android:layout_height="wrap_content" />
-
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 

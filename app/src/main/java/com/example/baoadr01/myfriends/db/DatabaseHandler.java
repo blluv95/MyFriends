@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.baoadr01.myfriends.Utils.MyContact;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -64,6 +66,14 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 			v.setCATEGORY(cursor.getString(4));
 			list.add(v);
 			cursor.moveToNext();
+		}
+		for(int i=0;i<list.size();i++) {
+			Collections.sort(list, new Comparator<MyContact>() {
+				@Override
+				public int compare(MyContact sv1, MyContact sv2) {
+					return (sv1.getNAME().compareToIgnoreCase(sv2.getNAME()));
+				}
+			});
 		}
 		return list;
 	}

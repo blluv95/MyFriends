@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -23,10 +25,11 @@ import com.example.baoadr01.myfriends.adapter.MyContactAdapter;
 import com.example.baoadr01.myfriends.db.DatabaseFavorite;
 import com.example.baoadr01.myfriends.db.DatabaseHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, Filterable {
 
     public static final String KEY_ID = "id_";
     public static final String KEY_NAME = "name";
@@ -53,6 +56,8 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
 
 
     public void searchContact() {
+
+
         edit_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,12 +66,18 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("CharSequence s--->",s.toString());
+                Log.i("start--->",start+"");
+                Log.i("before s--->",before+"");
+                Log.i("count s--->",count+"");
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s.toString());
+                getFilter().filter(s.toString());
+                Log.i("afterTextChanged--->", s.toString());
+
             }
         });
     }
@@ -87,6 +98,8 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
         adapter = new MyContactAdapter(view.getContext(), lst);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
         listView.setOnItemClickListener(this);
         return view;
     }
@@ -117,6 +130,7 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
         bundle.putString(KEY_CATEGORY, lst.get(position).getCATEGORY());
         intent.putExtra(KEY_INTENT, bundle);
         startActivity(intent);
+        Log.i("onItemClick--->", position + "");
         readAdapter();
     }
 
@@ -127,4 +141,33 @@ public class FragmentBoxOffice extends Fragment implements AdapterView.OnItemCli
     }
 
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<MyContact> resultData = new ArrayList<MyContact>();
+            for (int i = 0; i < lst.size(); i++) {
+                if (lst.get(i).getNAME().toString().contains(constraint)) {
+                    resultData.add(lst.get(i));
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = resultData;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filterData = (List<MyContact>) results.values;
+            adapter = new MyContactAdapter(getActivity(), filterData);
+            listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            Log.i("publishResults()--->", filterData.size() + "");
+        }
+    };
+    List<MyContact> filterData=new ArrayList<MyContact>();
 }
